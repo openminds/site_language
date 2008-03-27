@@ -1,12 +1,9 @@
 = Site Language
 
-Adds the translation of the pages and snippets to Radiant, using the Globalize plugin. Works with Radiant 0.6.4
+Adds the translation of the pages and snippets to Radiant, using the globalize plugin.
 
-- First, install globalize. (http://www.globalize-rails.org/globalize/)
-- Second, install the shards plugin	(http://svn.radiantcms.org/radiant/trunk/extensions/shards/)
-- Third, install this extension, and enable it
-- And last, but not least, navigate to the "Site-Language" in the admin, and add some language-codes (en-UK, nl-BE,...)
+- First, install globalize.
+- Second, install this extension, and enable it
+- Third, navigate to the "Site-Language" in the admin, and add some language-codes (en-UK, nl-BE,...)
 
-You're done! Have fun with multi-language Radiant!
-
-If you have any trouble, or you have a patch for this extension, you can always contact us at rails@openminds.be
+You're done.

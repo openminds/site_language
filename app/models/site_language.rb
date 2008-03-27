@@ -5,7 +5,7 @@ class SiteLanguage < ActiveRecord::Base
     end
 
     def default
-      'en-UK'
+      'nl-BE'
     end
   end
 end

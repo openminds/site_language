@@ -2,7 +2,7 @@
 require_dependency 'application'
 
 class SiteLanguageExtension < Radiant::Extension
-  version "0.2"
+  version "1.0"
   description "Habla Nederlands, sir? Si oder non?"
   url "http://openminds.be/"
   
@@ -10,7 +10,7 @@ class SiteLanguageExtension < Radiant::Extension
     map.connect 'admin/site_language/:action', :controller => 'admin/site_languages'
     begin
       SiteLanguage.codes.each do |code|
-        langname = Locale.new(code).language.to_s.downcase
+        langname = Locale.new(code).language.code
         map.connect "#{langname}/*url", :controller => 'site', :action => 'show_page', :language => code
       end
     rescue
@@ -59,7 +59,7 @@ class SiteLanguageExtension < Radiant::Extension
       before_filter :set_language
       
       def set_language
-        redirect_to :language => SiteLanguage.default, :url => params[:url] unless Locale.set params[:language] 
+        (redirect_to :language => SiteLanguage.default, :url => (params[:url] unless params[:url] == '/')) unless Locale.set params[:language] 
       end
       
       def show_page
@@ -98,6 +98,39 @@ class SiteLanguageExtension < Radiant::Extension
 
     Page.class_eval do
       translates :title, :breadcrumb, :slug
+      
+      def translated_url(langcode)
+        cur_lang = (Locale.active || Locale.base_language).code
+        if self.class_name.eql?("RailsPage") # (from the share_layouts extension)
+          r = "/#{Locale.new(langcode).language.code}/#{self.url[3..-1]}"
+        else
+          Locale.set langcode
+          self.reload
+          r = "/#{Locale.active.language.code}#{url}"
+          Locale.set cur_lang
+          self.reload
+        end
+        r
+      end
+      
+      def translated_slug(langcode)
+        cur_lang = (Locale.active || Locale.base_language).code
+        Locale.set langcode
+        self.reload
+        r = slug
+        Locale.set cur_lang
+        self.reload
+        r
+      end
+      
+      def self.find_by_base_url(url)
+        cur_lang = (Locale.active || Locale.base_language).code
+        Locale.set Locale.base_language.code
+        r = Page.find_by_url(url)
+        Locale.set cur_lang
+        r.reload
+        r
+      end
     end
 
     PagePart.class_eval do
