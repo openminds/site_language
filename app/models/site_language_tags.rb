@@ -60,7 +60,7 @@ module SiteLanguageTags
     attributes = options.inject('') { |s, (k, v)| s << %{#{k.downcase}="#{v}" } }.strip
     attributes = " #{attributes}" unless attributes.empty?
     text = tag.double? ? tag.expand : tag.render('title')
-    if defined?(SiteLanguage)  && SiteLanguage.count > 0
+    if defined?(SiteLanguage) && SiteLanguage.count > 0
       %{<a href="/#{(Locale.active || Locale.base_language).language.code}#{tag.render('url')}#{anchor}"#{attributes}>#{text}</a>}
     else
       %{<a href="#{tag.render('url')}#{anchor}"#{attributes}>#{text}</a>}
@@ -79,7 +79,7 @@ module SiteLanguageTags
     page = tag.locals.page
     breadcrumbs = [page.breadcrumb]
     page.ancestors.each do |ancestor|
-      if defined?(SiteLanguage)  && SiteLanguage.count > 0
+      if defined?(SiteLanguage) && SiteLanguage.count > 0
         breadcrumbs.unshift %{<a href="/#{(Locale.active || Locale.base_language).language.code}#{ancestor.url}">#{ancestor.breadcrumb}</a>}
       else
         breadcrumbs.unshift %{<a href="#{ancestor.url}">#{ancestor.breadcrumb}</a>}
