@@ -15,7 +15,7 @@
     <tr class="node level-1">
       <td class="snippet">
         <%= image "snippet", :class => "icon", :alt => 'snippet-icon', :title => '' %>
-		<% if defined?(SiteLanguage)  && SiteLanguage.count > 0 %>
+		<% if defined?(SiteLanguage) && SiteLanguage.count > 0 %>
 			<%= snippet.name %>
 			<small><% SiteLanguage.codes.each do |l| %>
 		    <%= link_to l, snippet_edit_url(:id => snippet, :language => l) %></span>

@@ -7,7 +7,7 @@
             <%= icon %>
             <%= node_title %>
           <% else -%>
-            <% if defined?(SiteLanguage)  && SiteLanguage.count > 0 %>
+            <% if defined?(SiteLanguage) && SiteLanguage.count > 0 %>
 				<%= expander %>
 				<%= icon %> <%= node_title %>
 				<% SiteLanguage.codes.each do |l| -%>

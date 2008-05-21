@@ -1,6 +1,3 @@
-# Uncomment this if you reference any of your controllers in activate
-require_dependency 'application'
-
 class SiteLanguageExtension < Radiant::Extension
   version "1.0"
   description "Habla Nederlands, sir? Si oder non?"
@@ -19,6 +16,7 @@ class SiteLanguageExtension < Radiant::Extension
   end
 
   def activate
+    require_dependency 'application'
     admin.tabs.add "Languages", "/admin/site_language", :after => "Layouts", :visibility => [:admin, :developer]
     # We need globalize
     unless ActiveRecord::Base.respond_to? :translates
@@ -33,23 +31,12 @@ class SiteLanguageExtension < Radiant::Extension
   end
   
   def enhance_classes
-    # Mixin'in the Mojo
-    # It seems impossible to add a before_filter to Admin::AbstractModelController from here :/
-    Admin::PageController.class_eval do
-      before_filter :set_locale
-      def set_locale
-        Locale.set params[:language] || SiteLanguage.default
-      end
-    end
-    Admin::SnippetController.class_eval do
-      before_filter :set_locale
-      def set_locale
-        Locale.set params[:language] || SiteLanguage.default
-      end
+    # stuff is not automatically inherited by already loaded classes
+    ApplicationController.descendants.each do |controller|
+      controller.send(:include, SiteLanguage::ControllerExtensions)
     end
 
-    Admin::AbstractModelController.send :include, SiteLanguage::AbstractModelControllerExtensions
-    SiteController.send :include, SiteLanguage::SiteControllerExtensions
+    SiteController.send(:include, SiteLanguage::SiteControllerExtensions)
     Page.send :include, SiteLanguage::PageExtensions
     
     Object.class_eval do
