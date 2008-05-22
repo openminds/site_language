@@ -848,7 +848,7 @@ module Globalize # :nodoc:
               joins_args << table_name << facet << language_id
 
               #for translated fields inside WHERE clause substitute corresponding COALESCE string
-              where_clause.gsub!(/((((#{table_name}\.)|\W)#{facet})|^#{facet})\W/, " COALESCE(#{facet_table_alias}.text, #{table_name}.#{facet}) ")
+              where_clause.gsub!(/([A-Za-z1-9-]|^)(#{table_name}\.([A-Za-z1-9-])?)?#{facet}([A-Za-z1-9-])/, "\\1COALESCE(#{facet_table_alias}.text, #{table_name}.\\3#{facet}\\4)") 
             end
 
             options[:conditions] = sanitize_sql(
