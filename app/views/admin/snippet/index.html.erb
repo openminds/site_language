@@ -1,0 +1,30 @@
+<h1>Snippets</h1>
+ 
+<p>Snippets are generally small pieces of content which are included in other pages or layouts.</p>
+ 
+<table id="snippets" class="index" cellspacing="0" border="0" cellpadding="0">
+    <tr>
+      <th class="snippet">Snippet</th>
+      <th class="modify">Modify</th>
+    </tr>
+    <% @snippets.each do |snippet| %>
+      <tr class="node level-1">
+        <td class="snippet">
+          <%= image('snippet', :alt => 'snippet-icon') %>
+          <% if defined?(SiteLanguage) && SiteLanguage.count > 0 %>
+            <span><%= snippet.name %></span>
+            <% SiteLanguage.codes.each do |l| %>
+              <%= link_to(l, translated_snippet_edit_url(:id => snippet, :language => l)) %>
+            <% end %>
+          <% else %>
+            <span><%= link_to snippet.name, snippet_edit_url(:id => snippet) %></span>
+          <% end %>
+        </td>
+        <td class="remove">
+          <%= link_to image('remove', :alt => 'Remove Snippet'), snippet_remove_url(:id => snippet) %>
+        </td>
+      </tr>
+    <% end %>
+</table>
+
+<p><%= link_to image('new-snippet', :alt => 'New Snippet'), snippet_new_url %></p>
