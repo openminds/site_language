@@ -29,7 +29,6 @@ class SiteLanguageExtension < Radiant::Extension
       raise SiteLanguageError, "Globalize does not appear to be installed."
     end
     enhance_classes
-    Page.send :include, SiteLanguageTags
   end
   
   def deactivate
@@ -39,31 +38,12 @@ class SiteLanguageExtension < Radiant::Extension
   private
   
   def enhance_classes
-    # stuff is not automatically inherited by already loaded classes
-    Admin::PageController.class_eval do
-      before_filter :set_locale, :except => [:index]
-      def set_locale
-        Locale.set(params[:language] || SiteLanguage.default)
-      end
-      protected
-      def continue_url(options)
-        options[:redirect_to] || (params[:continue] ? translated_page_edit_url(:id => @page.id, :language => params[:language]) : page_index_url)
-      end
-    end
+    Admin::PageController.send :include, SiteLanguage::ControllerExtensions::PageControllerExtensions
+    Admin::SnippetController.send :include, SiteLanguage::ControllerExtensions::SnippetControllerExtensions
+    SiteController.send :include, SiteLanguage::ControllerExtensions::SiteControllerExtensions
     
-    Admin::SnippetController.class_eval do
-      before_filter :set_locale, :except => [:index]
-      def set_locale
-        Locale.set(params[:language] || SiteLanguage.default)
-      end
-      protected
-      def continue_url(options)
-        options[:redirect_to] || (params[:continue] ? translated_snippet_edit_url(:id => @snippet.id, :language => params[:language]) : snippet_index_url)
-      end
-    end
-
-    SiteController.send(:include, SiteLanguage::SiteControllerExtensions)
     Page.send :include, SiteLanguage::PageExtensions
+    Page.send :include, SiteLanguageTags
 
     PagePart.class_eval do
       translates :content
