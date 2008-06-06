@@ -45,7 +45,6 @@ module SiteLanguage::ControllerExtensions
           response.headers.delete('Cache-Control')
           url = params[:url].to_s
           lang = params[:language].to_s
-          debugger
           if (request.get? || request.head?) and live? and (@cache.response_cached?(lang + '-' + url))
             @cache.update_response(lang + '-' + url, response, request)
             @performed_render = true
