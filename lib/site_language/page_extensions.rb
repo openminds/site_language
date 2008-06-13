@@ -1,7 +1,7 @@
 module SiteLanguage::PageExtensions
   def self.included(base)
     base.class_eval {
-      translates :title, :breadcrumb, :slug
+      translates :title, :breadcrumb, :slug, :keywords, :description
     }
   end
   
