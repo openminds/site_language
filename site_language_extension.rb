@@ -9,7 +9,8 @@ class SiteLanguageExtension < Radiant::Extension
   url "http://openminds.be/"
   
   define_routes do |map|
-    map.connect 'admin/site_language/:action', :controller => 'admin/site_languages'
+    map.resources :site_languages, :path_prefix => "/admin"
+    
     map.translated_page_edit 'admin/pages/edit/:id/:language', :controller => 'admin/page', :action => 'edit'
     map.translated_snippet_edit 'admin/snippets/edit/:id/:language', :controller => 'admin/snippet', :action => 'edit'
     begin

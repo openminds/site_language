@@ -8,4 +8,8 @@ class SiteLanguage < ActiveRecord::Base
       'nl-BE'
     end
   end
+  
+  def validate
+    errors.add("code", "has invalid format. Valid examples are 'nl-BE' and 'en-US'") unless RFC_3066.valid?(code)
+  end
 end

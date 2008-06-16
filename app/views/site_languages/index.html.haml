@@ -1,0 +1,17 @@
+%h1 Languages
+
+%table#languages.index{:cellspacing=>"0", :border=>"0", :cellpadding=>"0"}
+  %thead
+    %tr
+      %th.language Language code
+      %th.modify Modify
+  %tbody
+    - @site_languages.each do |lang|
+      %tr.node.level-1
+        %td.language
+          = link_to lang.code, edit_site_language_url(:id => lang)
+        %td.remove
+          = link_to(image('remove', :alt => 'Remove language'), site_language_url(:id => lang), :method => :delete, :confirm => 'Are you sure you want to delete this language? All translations for it so far will be lost!') 
+
+%p
+  = link_to image('new-language', :alt => 'New Language'), new_site_language_url, :title => "New Language"

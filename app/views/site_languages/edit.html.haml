@@ -1,0 +1,4 @@
+%h1 Edit Language
+
+- form_for :site_language, @site_language, :url => site_language_path(:id => @site_language), :html => {:method => :put} do |f|
+  = render :partial => "form", :locals => {:f => f}
