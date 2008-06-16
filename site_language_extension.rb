@@ -24,7 +24,7 @@ class SiteLanguageExtension < Radiant::Extension
   end
 
   def activate
-    admin.tabs.add "Languages", "/admin/site_language", :after => "Layouts", :visibility => [:admin, :developer]
+    admin.tabs.add "Languages", "/admin/site_languages", :after => "Layouts", :visibility => [:admin, :developer]
     # We need globalize
     unless ActiveRecord::Base.respond_to? :translates
       raise SiteLanguageError, "Globalize does not appear to be installed."
