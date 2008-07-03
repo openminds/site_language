@@ -74,7 +74,7 @@ module SiteLanguage::ControllerExtensions
         end
         
         def set_language
-          (redirect_to :language => SiteLanguage.default, :url => (params[:url] unless params[:url] == '/')) unless Locale.set params[:language] 
+          (redirect_to :language => SiteLanguage.default, :url => (params[:url] unless params[:url] == '/')) unless Locale.set(params[:language]) || SiteLanguage.count < 1
         end
       end
     end
