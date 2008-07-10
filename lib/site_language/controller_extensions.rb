@@ -15,7 +15,7 @@ module SiteLanguage::ControllerExtensions
     
     def continue_url(options)
       options[:redirect_to] || if params[:continue] && defined?(SiteLanguage) && SiteLanguage.count > 0
-          translated_page_edit_url(:id => @page.id, :language => params[:language])
+          translated_page_edit_url(:id => @page.id, :language => (params[:language] || SiteLanguage.find(:first).code))
         elsif params[:continue]
           page_edit_url(:id => @page.id)
         else
