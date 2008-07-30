@@ -38,7 +38,13 @@ module SiteLanguage::ControllerExtensions
     protected
     
     def continue_url(options)
-      options[:redirect_to] || (params[:continue] ? translated_snippet_edit_url(:id => @snippet.id, :language => params[:language]) : snippet_index_url)
+      options[:redirect_to] || if params[:continue] && defined?(SiteLanguage) && SiteLanguage.count > 0
+          translated_snippet_edit_url(:id => @page.id, :language => (params[:language] || SiteLanguage.find(:first).code))
+        elsif params[:continue]
+          snippet_edit_url(:id => @snippet.id)
+        else
+          snippet_index_url
+        end
     end
   end
   
