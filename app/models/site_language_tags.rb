@@ -22,11 +22,27 @@ module SiteLanguageTags
   
   tag 'sitelanguages:nav' do |tag|
     o = %{<ul id="nav_lang">\n}
-    codes = SiteLanguage.codes
-    codes.each do |lang|
-      nice_lang = Locale.new(lang).language.code
-      o += (lang == Locale.active.code) ? "\t<li class=\"current#{" first" if lang == codes.first}\">#{nice_lang}</li>\n" : %{\t<li#{" class=\"first\"" if lang == codes.first}><a href="#{tag.locals.page.translated_url(lang)}">#{nice_lang}</a></li>\n}
+    langs = SiteLanguage.find(:all)
+    langs.each do |lang|
+      next unless lang.show_in_langnav
+      nice_lang = Locale.new(lang.code).language.code
+      classes = ""
+      classes << "current " if lang.code == Locale.active.code
+      classes << "first" if lang == langs.first
+      classes.strip!
+      css_class = classes.blank? ? '' : " class=\"#{classes}\"" 
+      # If this language has a domain set, and it is not the current language, prepend the link with it's domain
+      # If it does not have it's own domain, and we're no longer on the 'base' domain, it should go back to avoid duplicate content on different domains
+      # if the current language doesn't have a domain, it defaults to the first SiteLanguage's domain, or none
+      if lang.domain.blank?
+        domain = langs.first.domain.blank? ? '': "http://#{langs.first.domain}"
+      else
+        domain = "http://#{lang.domain}"
+      end
+      link = (lang.code == Locale.active.code) ? nice_lang : "<a href=\"#{domain}#{tag.locals.page.translated_url(lang.code)}\">#{nice_lang}</a>"
+      o += "\t<li#{css_class}>#{link}</li>\n"
     end
+    codes = SiteLanguage.codes
     o += "</ul>\n"
   end
   
