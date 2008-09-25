@@ -14,7 +14,7 @@
           <% if defined?(SiteLanguage) && SiteLanguage.count > 0 %>
             <span><%= snippet.name %></span>
             <% SiteLanguage.codes.each do |l| %>
-              <%= link_to(l, translated_snippet_edit_url(:id => snippet, :language => l)) %>
+              <small><%= link_to(l, translated_snippet_edit_url(:id => snippet, :language => l)) %></small>
             <% end %>
           <% else %>
             <span><%= link_to snippet.name, snippet_edit_url(:id => snippet) %></span>

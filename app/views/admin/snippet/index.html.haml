@@ -15,7 +15,7 @@
           - if defined?(SiteLanguage) && SiteLanguage.count > 0
             %span= snippet.name
             - SiteLanguage.codes.each do |l|
-              = link_to(l, translated_snippet_edit_url(:id => snippet, :language => l))
+              %small= link_to(l, translated_snippet_edit_url(:id => snippet, :language => l))
           - else
             %span= link_to snippet.name, snippet_edit_url(:id => snippet)
         %td.remove
