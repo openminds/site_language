@@ -4,7 +4,7 @@ module SiteLanguage::PageExtensions
       translates :title, :breadcrumb, :slug, :keywords, :description
     }
   end
-  
+
   def translated_url(langcode)
     cur_lang = (Locale.active || Locale.base_language).code
     if self.class_name.eql?("RailsPage") # (from the share_layouts extension)
@@ -29,12 +29,4 @@ module SiteLanguage::PageExtensions
     r
   end
   
-  def self.find_by_base_url(url)
-    cur_lang = (Locale.active || Locale.base_language).code
-    Locale.set Locale.base_language.code
-    r = Page.find_by_url(url)
-    Locale.set cur_lang
-    r.reload
-    r
-  end
 end

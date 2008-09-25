@@ -4,7 +4,12 @@ module SiteLanguage::ControllerExtensions
     def self.included(base)
       base.class_eval do
         before_filter :set_locale, :except => [:index]
+        before_filter :reset_locale, :only => [:index] # To prevent page index screen from showing other-language breadcrumbs
       end
+    end
+    
+    def reset_locale
+      Locale.set(SiteLanguage.default)
     end
     
     def set_locale
@@ -62,8 +67,8 @@ module SiteLanguage::ControllerExtensions
             url = url.to_s
           end
           lang = params[:language].to_s
-          if (request.get? || request.head?) and live? and (@cache.response_cached?(lang + '-' + url))
-            @cache.update_response(lang + '-' + url, response, request)
+          if (request.get? || request.head?) and live? and (@cache.response_cached?(lang + '/' + url))
+            @cache.update_response(lang + '/' + url, response, request)
             @performed_render = true
           else
             show_uncached_page(url, lang)
@@ -76,7 +81,7 @@ module SiteLanguage::ControllerExtensions
           @page = find_page(url)
           unless @page.nil?
             process_page(@page)
-            @cache.cache_response(lang + '-' + url, response) if request.get? and live? and @page.cache?
+            @cache.cache_response(lang + '/' + url, response) if request.get? and live? and @page.cache?
             @performed_render = true
           else
             render :template => 'site/not_found', :status => 404
