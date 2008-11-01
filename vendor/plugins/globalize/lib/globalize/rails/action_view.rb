@@ -5,7 +5,7 @@ module ActionView # :nodoc: all
     
     # Name of file extensions which are handled internally in rails. Other types
     # like liquid has to register through register_handler.
-    @@re_extension = /\.(erb|rjs|builder)$/
+    @@re_extension = /\.(rjs|rhtml|rxml|erb|builder|haml)$/
     
     @@globalize_path_cache = {}
 
