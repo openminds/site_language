@@ -26,10 +26,10 @@
           <% unless simple -%><td class="status <%= page.status.name.downcase %>-status"><%= page.status.name %></td><% end %>
         <% end %>
         <% node.add_child_column do %>
-          <% unless simple -%><td class="add-child"><%= link_to image('add-child', :alt => 'add child'), page_new_url(:parent_id => page) %></td><% end %>
+          <% unless simple -%><td class="add-child"><%= link_to image('add-child', :alt => 'add child'), new_admin_page_url(:parent_id => page) %></td><% end %>
         <% end %>
         <% node.remove_column do %>
-          <% unless simple %><td class="remove"><%= link_to image('remove', :alt => 'remove page'), page_remove_url(:id => page) %></td><% end %>
+          <% unless simple %><td class="remove"><%= link_to image('remove', :alt => 'remove page'), remove_admin_page_url(:id => page) %></td><% end %>
         <% end %>
       <% end %>
     </tr>
