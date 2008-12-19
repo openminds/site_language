@@ -39,8 +39,8 @@ class SiteLanguageExtension < Radiant::Extension
   private
   
   def enhance_classes
-    Admin::PageController.send :include, SiteLanguage::ControllerExtensions::PageControllerExtensions
-    Admin::SnippetController.send :include, SiteLanguage::ControllerExtensions::SnippetControllerExtensions
+    Admin::PagesController.send :include, SiteLanguage::ControllerExtensions::PageControllerExtensions
+    Admin::SnippetsController.send :include, SiteLanguage::ControllerExtensions::SnippetControllerExtensions
     SiteController.send :include, SiteLanguage::ControllerExtensions::SiteControllerExtensions
     
     Page.send :include, SiteLanguage::PageExtensions
