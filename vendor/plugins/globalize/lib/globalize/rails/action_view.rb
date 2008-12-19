@@ -41,11 +41,11 @@ module ActionView # :nodoc: all
           if template_extension
             template_file_name = full_template_path(template_path_without_extension, template_extension)
           else
-            template_extension = pick_template_extension(template_path).to_s
+            template_extension = @finder.pick_template_extension(template_path).to_s
             unless template_extension
               raise ActionViewError, "No #{template_handler_preferences.to_sentence} template found for #{template_path} in #{view_paths.inspect}"
             end
-            template_file_name = full_template_path(template_path, template_extension)
+            template_file_name = @finder.pick_template(template_path, template_extension)
             template_extension = template_extension.gsub(/^.+\./, '') # strip off any formats
           end
         else
