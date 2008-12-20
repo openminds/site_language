@@ -8,17 +8,17 @@
             <%= node_title %>
           <% else -%>
             <% if defined?(SiteLanguage) && SiteLanguage.count > 0 %>
-				<%= expander %>
-				<%= icon %> <%= node_title %>
-				<% SiteLanguage.codes.each do |l| -%>
-	        		<small><a href="<%= translated_page_edit_url(:id => page, :language => l) %>" title="<%= page.url %>"><%= l %></a></small>
-				<% 	end 
-			  else -%>
+				      <%= expander %>
+				      <%= icon %> <%= node_title %>
+				      <% SiteLanguage.codes.each do |l| -%>
+	        		  <small><a href="<%= translated_page_edit_url(:id => page, :language => l) %>" title="<%= page.url %>"><%= l %></a></small>
+				      <% 	end 
+			      else -%>
             	<%= expander %><a href="<%= page_edit_url(:id => page) %>" title="<%= page.url %>"><%= icon %> <%= node_title %></a> 
-			<% end %>
+			      <% end %>
             <%= page_type %>
             <%= spinner %>
-            <% end -%>
+          <% end -%>
           </span>
         </td>
         <% end %>
