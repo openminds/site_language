@@ -1,3 +1,0 @@
-[submodule "vendor/plugins/globalize"]
-	path = vendor/plugins/globalize
-	url = git://github.com/jomz/globalize.git
