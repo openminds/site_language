@@ -1,6 +1,6 @@
 .form-area
   %p
-    %label.code Language Code
+    %label.code Language Code *
     = f.text_field :code
   %p
     %label.domain Domain
@@ -9,6 +9,6 @@
     %label.checkbox Show in language navigation menu
     = f.check_box :show_in_langnav
   %p
-    =submit_tag "Save" 
+    =submit_tag "Save"
     or
     =link_to "Cancel", site_languages_path
