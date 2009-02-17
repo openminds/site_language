@@ -11,8 +11,8 @@ class SiteLanguageExtension < Radiant::Extension
   define_routes do |map|
     map.resources :site_languages, :path_prefix => "/admin"
     
-    map.translated_page_edit 'admin/pages/edit/:id/:language', :controller => 'admin/page', :action => 'edit'
-    map.translated_snippet_edit 'admin/snippets/edit/:id/:language', :controller => 'admin/snippet', :action => 'edit'
+    map.translated_page_edit 'admin/pages/edit/:id/:language', :controller => 'admin/pages', :action => 'edit'
+    map.translated_snippet_edit 'admin/snippets/edit/:id/:language', :controller => 'admin/snippets', :action => 'edit'
     begin
       SiteLanguage.codes.each do |code|
         langname = Locale.new(code).language.code
